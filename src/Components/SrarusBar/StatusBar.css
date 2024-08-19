@@ -1,0 +1,79 @@
+.stages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  padding: 2rem 0;
+}
+
+.stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.2rem;
+  width: 100px;
+  height: 100px;
+}
+
+.progress-dot {
+  width: 20px;
+  height: 20px;
+  border: solid 2px #d1d5db;
+  border-radius: 50%;
+  position: relative;
+}
+
+.approved .progress-dot {
+  background-color: #f12c26;
+  border: solid 2px #f12c26;
+}
+
+.progress-dot::after {
+  content: " ";
+  position: absolute;
+  width: 2px;
+  height: 82.5px;
+  background-color: #d1d5db;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.approved .progress-dot::after {
+  background-color: #f12c26;
+}
+
+.stage:last-child .progress-dot::after {
+  visibility: hidden;
+}
+
+.stage .info p {
+  font-size: 16px;
+  color: #333333;
+  font-weight: 700;
+}
+
+.approved .info p {
+  color: #f12c26;
+}
+
+.stage .info .type {
+  display: flex;
+  align-items: center;
+}
+
+.stage .info .type p {
+  color: #d1d5db;
+  font-size: 10px;
+}
+
+.stage .info {
+  height: fit-content;
+}
+
+.stage .info img {
+  width: 12px;
+}
+
+.stage .info p {
+  font-size: 12px;
+}
