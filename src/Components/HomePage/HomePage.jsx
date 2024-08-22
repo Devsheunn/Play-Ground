@@ -3,9 +3,11 @@ import { assets } from "../../assets/assets";
 import "./HomePage.css";
 import Card from "../Card/Card";
 import Header from "../Header/Header";
+import { useAuth } from "../../Context/AuthContext";
 const HomePage = () => {
   // Variables
   const sectionRefs = useRef([]);
+  const { user, logout } = useAuth();
 
   // Functions
   const handleScroll = num => {
@@ -23,7 +25,9 @@ const HomePage = () => {
           className="section--1"
           ref={el => (sectionRefs.current[1] = el)}
         >
-          <h1>Aina, Oluwatobiloba Seun</h1>
+          <h1>
+            {user.last_name} {user.first_name}
+          </h1>
           <p>Welcome to Egbin Power Plant Self Service Portal</p>
         </section>
 
