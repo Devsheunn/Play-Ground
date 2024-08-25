@@ -1,31 +1,76 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import "./LoginPage.css";
-import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-import api from "../../Utils/axios";
-import { useAuth } from "../../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import PublicApi from "../../Utils/axios";
+import useAuth from "../../Hooks/UseAuth";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
+
   const navigate = useNavigate();
-  //   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  // const userRef = useRef();
+  // const errRef = useRef();
+
+  // const [user, setUser] = useState("");
+  // const [pwd, setPwd] = useState("");
+  // const [errMsg, setErrMsg] = useState("");
+
+  // useEffect(() => {
+  //   userRef.current.focus();
+  // }, []);
+
+  // useEffect(() => {
+  //   setErrMsg("");
+  // }, [user, pwd]);
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     try {
-      await login({ email, password });
+      const response = await PublicApi.post(
+        "api/token/",
+        { email, password },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      //console.log(JSON.stringify(response));
+      // const accessToken = response?.data?.accessToken;
+      // setAuth({ email, password, accessToken });
+      // setEmail("");
+      // setPassword("");
+      // navigate(from, { replace: true });
+      localStorage.setItem("access", response.data.accesss);
       navigate("/homePage");
-      setEmail("");
-      setPassword("");
-    } catch (error) {
-      console.log("login failed", error);
+    } catch (err) {
+      if (!err?.response) {
+        console.log("No Server Response");
+      } else if (err.response?.status === 400) {
+        console.log("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        console.log("Unauthorized");
+      } else {
+        console.log("Login Failed");
+      }
+      // errRef.current.focus();
     }
   };
+
+  const togglePersist = () => {
+    setPersist(prev => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   return (
     <div className="login-container">

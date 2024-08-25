@@ -3,11 +3,9 @@ import { assets } from "../../assets/assets";
 import "./HomePage.css";
 import Card from "../Card/Card";
 import Header from "../Header/Header";
-import { useAuth } from "../../Context/AuthContext";
 const HomePage = () => {
   // Variables
   const sectionRefs = useRef([]);
-  const { user, logout } = useAuth();
 
   // Functions
   const handleScroll = num => {
