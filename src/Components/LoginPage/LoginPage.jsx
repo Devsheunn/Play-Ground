@@ -1,55 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import "./LoginPage.css";
 import PublicApi from "../../Utils/axios";
 import useAuth from "../../Hooks/UseAuth";
+import GetUserDetails from "../GetUserDetails";
+import AuthContext from "../../Context/AuthContext";
+import useAxiosPrivate from "../../Hooks/usePrivateAxios";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuth, persist, setPersist } = useAuth();
+  const { accessToken, setAccessToken, user, setUser } =
+    useContext(AuthContext);
+  const { refreshToken, setRefreshToken } = useContext(AuthContext);
+  const api = useAxiosPrivate();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-
-  // const userRef = useRef();
-  // const errRef = useRef();
-
-  // const [user, setUser] = useState("");
-  // const [pwd, setPwd] = useState("");
-  // const [errMsg, setErrMsg] = useState("");
-
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, []);
-
-  // useEffect(() => {
-  //   setErrMsg("");
-  // }, [user, pwd]);
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     try {
       const response = await PublicApi.post(
-        "api/token/",
+        "api/users/token/",
         { email, password },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
-      // const accessToken = response?.data?.accessToken;
-      // setAuth({ email, password, accessToken });
-      // setEmail("");
-      // setPassword("");
-      // navigate(from, { replace: true });
-      localStorage.setItem("access", response.data.accesss);
-      navigate("/homePage");
+      console.log(response);
+      console.log(response.data.access);
+      localStorage.setItem("access", response.data.access);
+      setAccessToken(response.data.access);
+      console.log(accessToken);
+      setRefreshToken(response.data.refresh);
+      getUser();
     } catch (err) {
       if (!err?.response) {
         console.log("No Server Response");
@@ -60,17 +46,10 @@ const LoginPage = () => {
       } else {
         console.log("Login Failed");
       }
-      // errRef.current.focus();
+    } finally {
+      navigate("/homePage");
     }
   };
-
-  const togglePersist = () => {
-    setPersist(prev => !prev);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("persist", persist);
-  }, [persist]);
 
   return (
     <div className="login-container">

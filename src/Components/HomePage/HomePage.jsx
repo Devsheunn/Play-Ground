@@ -1,11 +1,34 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { assets } from "../../assets/assets";
 import "./HomePage.css";
 import Card from "../Card/Card";
 import Header from "../Header/Header";
+import AuthContext from "../../Context/AuthContext";
+import GetUserDetails from "../GetUserDetails";
+
 const HomePage = () => {
   // Variables
   const sectionRefs = useRef([]);
+  const { user, setUser, getDepartment } = useContext(AuthContext);
+  const getUser = GetUserDetails();
+
+  // const storedUser = localStorage.getItem("user");
+
+  // useEffect(() => {
+  //   console.log(storedUser);
+  //   if (storedUser && !user) {
+  //     console.log("user stored");
+  //     setUser(JSON.parse(storedUser));
+  //   }
+  //   console.log("none");
+  //   getDepartment();
+  // }, []);
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  console.log(user);
 
   // Functions
   const handleScroll = num => {
@@ -24,7 +47,8 @@ const HomePage = () => {
           ref={el => (sectionRefs.current[1] = el)}
         >
           <h1>
-            {user.last_name} {user.first_name}
+            {user?.last_name} {user?.first_name}
+            {/* Aina Oluwatobiloba Seun */}
           </h1>
           <p>Welcome to Egbin Power Plant Self Service Portal</p>
         </section>

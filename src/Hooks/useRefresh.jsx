@@ -1,24 +1,19 @@
-import axios from "../api/axios";
+import PublicApi from "../Utils/axios";
 import useAuth from "./UseAuth";
+import useAxiosPrivate from "./usePrivateAxios";
+import { PrivateApi } from "../Utils/axios";
+import { useContext } from "react";
+import AuthContext from "../Context/AuthContext";
 
 const useRefreshToken = () => {
-  const { setAuth } = useAuth();
+  const { refreshToken } = useContext(AuthContext);
 
   const refresh = async () => {
-    const response = await axios.get("/refresh", {
-      withCredentials: true,
+    console.log(refreshToken);
+    const response = await PublicApi.post("api/users/token/refresh/", {
+      refresh: refreshToken,
     });
-    localStorage.setItem("access", response.data.access);
-    setAuth(prev => {
-      console.log(JSON.stringify(prev));
-      console.log(response.data.accessToken);
-      return {
-        ...prev,
-        roles: response.data.roles,
-        accessToken: response.data.accessToken,
-      };
-    });
-    return response.data.accessToken;
+    return response.data.access;
   };
   return refresh;
 };

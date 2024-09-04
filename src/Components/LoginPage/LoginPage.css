@@ -5,7 +5,7 @@
   place-content: center;
 }
 
-form {
+.login-container form {
   width: 500px;
   height: 400px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -15,7 +15,7 @@ form {
   position: relative;
 }
 
-input {
+.login-container input {
   margin-bottom: 0.8rem;
   width: 100%;
   font-size: 16px;
@@ -26,7 +26,7 @@ input {
   border-radius: 8px;
 }
 
-button {
+.login-container button {
   width: 100px;
   margin: 0 auto;
   cursor: pointer;
@@ -38,11 +38,11 @@ button {
   bottom: 3rem; */
 }
 
-button:hover {
+.login-container button:hover {
   background-color: #f12c26;
 }
 
-img {
+.login-container img {
   width: 100px;
   margin-bottom: 1rem;
 }

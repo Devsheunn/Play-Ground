@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import useAxiosPrivate from "../Hooks/usePrivateAxios";
 
 export const FormContext = createContext();
 const FormContextProvider = props => {
@@ -8,10 +9,11 @@ const FormContextProvider = props => {
   const [selectionComplete, setSelectionComplete] = useState(false);
   const [userInput, setUserInput] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const url = "https://jsonplaceholder.typicode.com/users";
+  const url = "api/users/";
   const [data, setData] = useState([]);
   const [selectedEmployeesTemp, setSelectedEmployeesTemp] = useState([]);
   const [dateValue, setDateValue] = useState({});
+  const api = useAxiosPrivate();
 
   // Functions
   const handleOnDelete = dataId => {
@@ -21,7 +23,7 @@ const FormContextProvider = props => {
   useEffect(() => {
     const getData = async url => {
       try {
-        const response = await axios.get(url);
+        const response = await api.get(url);
         setData(response.data);
         console.log(response.data);
       } catch (error) {
@@ -36,7 +38,7 @@ const FormContextProvider = props => {
   useEffect(() => {
     setFilteredData(
       data.filter(data =>
-        data.name.toLowerCase().includes(userInput.toLowerCase())
+        data.first_name.toLowerCase().includes(userInput.toLowerCase())
       )
     );
   }, [data, userInput]);

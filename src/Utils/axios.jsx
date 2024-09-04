@@ -4,6 +4,7 @@ const BASE_URL =
 
 const PublicApi = axios.create({
   baseURL: BASE_URL,
+  headers: { "Content-Type": "application/json" },
 });
 
 export default PublicApi;

@@ -13,8 +13,10 @@ const SelectedEmployees = () => {
       {selectedEmployeesTemp.length && selectionComplete > 0
         ? selectedEmployeesTemp.map(item => (
             <div key={item.id} className="employee-job-details">
-              <p className="id">{item.phone}</p>
-              <p className="name"> {item.name} </p>
+              <p className="id">{item.staff_id}</p>
+              <p className="name">
+                {item.first_name} {item.last_name}
+              </p>
               <p className="dates">{item.dates.join(", ")}</p>
             </div>
           ))

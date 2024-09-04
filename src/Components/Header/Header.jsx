@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { assets } from "../../assets/assets";
 import "./Header.css";
+import { useNavigate, Link } from "react-router-dom";
+import AuthContext from "../../Context/AuthContext";
 
 const Header = () => {
   // Variables
   const [accountVisible, setAccountVisible] = useState(false);
   const sectionRefs = useRef([]);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Functions
 
@@ -34,6 +38,14 @@ const Header = () => {
     setAccountVisible(prev => !prev);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("access");
+    navigate("/login");
+    setUser(null);
+  };
+
+  const { user } = useContext(AuthContext);
+
   return (
     <>
       <header
@@ -45,17 +57,26 @@ const Header = () => {
         </div>
         <nav className="nav">
           <ul>
-            <li onClick={() => {}}>
-              <a href="#"></a>Home
+            <li>
+              <Link className="link active-link" to={"/homePage"}>
+                Home
+              </Link>
             </li>
-            <li onClick={() => handleScroll(2)}>
-              <a href="#"></a>Self Services
+            <li>
+              <Link className="link" to={"/inconvenience-allowance"}>
+                Inconvinience Allowance
+              </Link>
             </li>
-            <li onClick={() => handleScroll(3)}>
-              <a href="#"></a>About Us
+            <li>
+              <Link className="link" to={"/homePage"}>
+                About Us
+              </Link>
             </li>
-            <li onClick={() => handleScroll(4)}>
-              <a href="#"></a>Contact Us
+            <li>
+              <Link className="link" to={"/homePage"}>
+                {" "}
+                Contact Us
+              </Link>
             </li>
           </ul>
           <div className="account-section">
@@ -69,9 +90,13 @@ const Header = () => {
         {accountVisible ? (
           <div className="account-dropdown">
             <div className="account-info">
-              <div className="profile-pic">A</div>
-              <p className="account-name">AINA, Oluwatobiloba Seun</p>
-              <p className="account-mail">ainatobitobig@gmail.com</p>
+              <div className="profile-pic">
+                {user && user?.first_name.charAt(0)}
+              </div>
+              <p className="account-name">
+                {user?.first_name} {user?.last_name}
+              </p>
+              <p className="account-mail">{user?.email}</p>
             </div>
             <div className="account-features">
               <div className="theme">
@@ -82,9 +107,9 @@ const Header = () => {
                 <img src={assets.settingsIcon} alt="settings icon" />
                 <p>Settings</p>
               </div>
-              <div className="log-out">
+              <div onClick={() => logOut()} className="log-out">
                 <img src={assets.logOutIcon} alt="log-out icon" />
-                <p>Log Out</p>
+                <p onClick={() => logOut()}>Log Out</p>
               </div>
             </div>
           </div>

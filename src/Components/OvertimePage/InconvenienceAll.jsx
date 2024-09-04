@@ -1,15 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Table from "../Table/Table";
 import "./InconvenienceAll.css";
 import { assets } from "../../assets/assets";
 import Header from "../Header/Header";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../Context/AuthContext";
+import useAxiosPrivate from "../../Hooks/usePrivateAxios";
+import GetUserDetails from "../GetUserDetails";
+import GetData from "../GetData";
 
 const InconvenienceAll = () => {
   const navigate = useNavigate();
-
+  const { user, dept } = useContext(AuthContext);
+  const [error, setError] = useState(null);
   const [toggleTabs, setToggleTabs] = useState(1);
   const [isMyAccoount, setIsMyAccount] = useState(true);
+  const getUser = GetUserDetails();
+  const getData = GetData();
 
   const handleToggle = i => {
     setToggleTabs(i);
@@ -26,32 +33,28 @@ const InconvenienceAll = () => {
 
   const columns = [
     {
-      name: "ID",
+      name: "Job ID",
       selector: row => row.id,
       sortable: true,
     },
     {
-      name: "Department",
-      selector: row => row.department,
+      name: "Job Description",
+      selector: row => row.job_description,
     },
     {
-      name: "Title",
-      selector: row => row.title,
-    },
-    {
-      name: "Status",
-      selector: row => row.status,
+      name: "Attendance",
+      selector: row => row.attendance_status,
       conditionalCellStyles: [
         {
-          when: row => row.status === "complete",
+          when: row => row.status === "present",
           classNames: ["iscomplete", "status"],
         },
+        // {
+        //   when: row => row.status === "in-progress",
+        //   classNames: ["in-progress", "status"],
+        // },
         {
-          when: row => row.status === "in-progress",
-          classNames: ["in-progress", "status"],
-        },
-        {
-          when: row => row.status === "declined",
+          when: row => row.status === "absent",
           classNames: ["declined", "status"],
         },
       ],
@@ -64,13 +67,10 @@ const InconvenienceAll = () => {
   ];
 
   const [data, setData] = useState({});
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/c/55e1-d949-4b30-ad36")
-      .then(res => res.json())
-      .then(data => setData(data))
-      .catch(err => setError(err));
+    getData("api/inconvenience-request-lines/own/", setData);
+    getUser();
   }, []);
 
   return (
@@ -103,9 +103,11 @@ const InconvenienceAll = () => {
                     <img src={assets.myPic} alt="profile pic" />
                   </div>
                   <div className="name-email-department">
-                    <h3>Aina, Oluwatobiloba Seun</h3>
-                    <h4>Electrical Electronics</h4>
-                    <p>ainatobitobig@gmail.com</p>
+                    <h3>
+                      {user?.last_name}, {user?.first_name}
+                    </h3>
+                    <h4>{user?.department_name}</h4>
+                    <p>{user?.email}</p>
                   </div>
                 </div>
               </div>

@@ -89,8 +89,10 @@ const Search = () => {
             selectedEmployeesTemp.map((item, i) => (
               <div key={item.id} className="name-calender">
                 <div>
-                  <p>{item.name}</p>
-                  <p>{item.phone}</p>
+                  <p>
+                    {item.first_name} {item.last_name}
+                  </p>
+                  <p>{item.staff_id}</p>
                 </div>
                 <div
                   onChange={e => {

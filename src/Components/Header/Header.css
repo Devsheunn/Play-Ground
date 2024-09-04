@@ -43,11 +43,15 @@
   position: relative;
 }
 
-.nav ul li:nth-child(1) {
+.nav ul li .link {
+  text-decoration: none;
+}
+
+.nav ul li .active-link {
   color: #f12c26;
 }
 
-.nav ul li:hover {
+.nav ul li link:hover {
   cursor: pointer;
   color: #f12c26;
 }
@@ -72,7 +76,6 @@
 
 .nav ul li:hover::after {
   visibility: visible;
-  /* transform: scaleX(1); */
   width: 100%;
 }
 

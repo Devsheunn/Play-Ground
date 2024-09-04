@@ -55,8 +55,11 @@ const SearchResult = () => {
               handleOnSelect(data);
             }}
           >
-            <p> {data.name}</p>
-            <p>{data.phone}</p>
+            <p>
+              {" "}
+              {data.first_name} {data.last_name}
+            </p>
+            <p>{data.staff_id}</p>
           </div>
         ))
       ) : (
