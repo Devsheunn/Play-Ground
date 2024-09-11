@@ -7,19 +7,22 @@ import useAuth from "../../Hooks/UseAuth";
 import GetUserDetails from "../GetUserDetails";
 import AuthContext from "../../Context/AuthContext";
 import useAxiosPrivate from "../../Hooks/usePrivateAxios";
+import Loader from "../Loader/Loader";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { accessToken, setAccessToken, user, setUser } =
     useContext(AuthContext);
-  const { refreshToken, setRefreshToken } = useContext(AuthContext);
+  const { refreshToken, setRefreshToken, isLoading, setIsLoading } =
+    useContext(AuthContext);
   const api = useAxiosPrivate();
 
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await PublicApi.post(
         "api/users/token/",
@@ -36,6 +39,7 @@ const LoginPage = () => {
       console.log(accessToken);
       setRefreshToken(response.data.refresh);
       navigate("/homePage");
+      setIsLoading(false);
     } catch (err) {
       if (!err?.response) {
         console.log("No Server Response");
@@ -49,7 +53,9 @@ const LoginPage = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className="login-container">
       <form action="/" onSubmit={handleSubmit}>
         <img src={assets.egbinLogo} alt="" />

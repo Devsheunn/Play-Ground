@@ -14,6 +14,7 @@ import HomePage from "./Components/HomePage/HomePage";
 import LoginPage from "./Components/LoginPage/LoginPage";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
 import { AuthProvider } from "./Context/AuthContext";
+import Loader from "./Components/Loader/Loader";
 
 const router = createBrowserRouter([
   {

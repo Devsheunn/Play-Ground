@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <AuthContext.Provider
@@ -16,6 +17,8 @@ export const AuthProvider = ({ children }) => {
         setAccessToken,
         refreshToken,
         setRefreshToken,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}

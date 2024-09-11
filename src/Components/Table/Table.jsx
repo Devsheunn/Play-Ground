@@ -27,7 +27,7 @@ const Table = ({ columns, data, error }) => {
         <DataTable
           columns={columns}
           data={data}
-          // pagination
+          pagination
           // onRowDoubleClicked={row => {
           //   console.log(row.status);
           // }}

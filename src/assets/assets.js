@@ -23,6 +23,7 @@ import edit from "./edit-3-svgrepo-com.svg";
 import close from "./close-svgrepo-com.svg";
 import calender from "./calendar_month_24dp_333333_FILL0_wght400_GRAD0_opsz24.svg";
 import grid from "./grid-svgrepo-com (1).svg";
+import loader from "./Spinner@1x-1.0s-200px-200px.svg";
 
 export const assets = {
   egbinLogo,
@@ -50,4 +51,5 @@ export const assets = {
   close,
   calender,
   grid,
+  loader,
 };

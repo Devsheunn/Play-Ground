@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 // import axios from "axios";
 import useAxiosPrivate from "../Hooks/usePrivateAxios";
+import toast from "react-hot-toast";
 
 export const FormContext = createContext();
 const FormContextProvider = props => {
@@ -21,6 +22,12 @@ const FormContextProvider = props => {
   // Functions
   const handleOnDelete = dataId => {
     setSelectedEmployeesTemp(prev => prev.filter(item => item.id !== dataId));
+  };
+
+  const alreadybooked = error => {
+    toast.error(error.response.data.non_field_errors[0], {
+      hideProgressBar: false,
+    });
   };
 
   const handleCreate = async e => {
@@ -50,7 +57,13 @@ const FormContextProvider = props => {
         }
       );
       console.log(response2);
+
+      return true;
     } catch (error) {
+      console.log(error.response?.status);
+      if (error.response?.status === 400) {
+        alreadybooked(error);
+      }
       console.log(error);
     }
   };
