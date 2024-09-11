@@ -26,11 +26,11 @@ const Table = ({ columns, data, error }) => {
       ) : (
         <DataTable
           columns={columns}
-          data={data.Overtime}
-          pagination
-          onRowDoubleClicked={row => {
-            console.log(row.status);
-          }}
+          data={data}
+          // pagination
+          // onRowDoubleClicked={row => {
+          //   console.log(row.status);
+          // }}
           customStyles={customStyles}
         />
       )}

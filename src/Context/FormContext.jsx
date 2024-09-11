@@ -13,11 +13,46 @@ const FormContextProvider = props => {
   const [data, setData] = useState([]);
   const [selectedEmployeesTemp, setSelectedEmployeesTemp] = useState([]);
   const [dateValue, setDateValue] = useState({});
+  const [canProceed, setCanProceed] = useState(false);
   const api = useAxiosPrivate();
+  const [formData, setFormData] = useState({ selected: [] });
+  let arrayToPost = [];
 
   // Functions
   const handleOnDelete = dataId => {
     setSelectedEmployeesTemp(prev => prev.filter(item => item.id !== dataId));
+  };
+
+  const handleCreate = async e => {
+    e.preventDefault();
+
+    setFormData(prevState => ({
+      ...prevState,
+      selected: arrayToPost,
+    }));
+
+    try {
+      const response = await api.post(`api/inconvenience-requests/`, {
+        title: formData.title,
+        description: formData.description,
+      });
+
+      console.log(response.data);
+      const id = formData.selected[0].employee;
+      console.log(id);
+
+      const response2 = await api.post(
+        `api/inconvenience-request-lines/${id}/`,
+        {
+          employee: formData.selected[0].employee,
+          response: "pending",
+          dates: formData.selected[0].dates,
+        }
+      );
+      console.log(response2);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -60,6 +95,12 @@ const FormContextProvider = props => {
     setDateValue,
     selectionComplete,
     setSelectionComplete,
+    canProceed,
+    setCanProceed,
+    handleCreate,
+    formData,
+    setFormData,
+    arrayToPost,
   };
 
   return (

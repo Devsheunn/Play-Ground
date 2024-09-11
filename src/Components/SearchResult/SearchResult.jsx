@@ -10,6 +10,7 @@ const SearchResult = () => {
     setUserInput,
     setSelectedEmployeesTemp,
     selectedEmployeesTemp,
+    setCanProceed,
   } = useContext(FormContext);
 
   const alreadyAdded = () => {
@@ -40,6 +41,7 @@ const SearchResult = () => {
         const withDate = { ...data, dates: [] };
         return [...prev, withDate];
       });
+      setCanProceed(false);
     }
     console.log(selectedEmployeesTemp);
   };

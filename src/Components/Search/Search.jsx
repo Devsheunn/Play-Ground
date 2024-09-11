@@ -22,6 +22,8 @@ const Search = () => {
     selectionComplete,
     setSelectionComplete,
     Toaster,
+    canProceed,
+    setCanProceed,
   } = useContext(FormContext);
 
   const handleAddEmployeesDone = e => {
@@ -47,7 +49,11 @@ const Search = () => {
       })
     );
 
-    console.log(data);
+    if (dates.length === 0) {
+      setCanProceed(false);
+    } else {
+      setCanProceed(true);
+    }
   };
 
   const datePickerRef = useRef();
@@ -134,7 +140,7 @@ const Search = () => {
             <div className="no-selection">No employee selected yet...</div>
           )}
         </div>
-        {selectedEmployeesTemp.length > 0 ? (
+        {selectedEmployeesTemp.length > 0 && canProceed ? (
           <button
             onClick={e => {
               handleAddEmployeesDone(e);

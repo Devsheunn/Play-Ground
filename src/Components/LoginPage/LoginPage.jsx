@@ -35,7 +35,7 @@ const LoginPage = () => {
       setAccessToken(response.data.access);
       console.log(accessToken);
       setRefreshToken(response.data.refresh);
-      getUser();
+      navigate("/homePage");
     } catch (err) {
       if (!err?.response) {
         console.log("No Server Response");
@@ -46,8 +46,6 @@ const LoginPage = () => {
       } else {
         console.log("Login Failed");
       }
-    } finally {
-      navigate("/homePage");
     }
   };
 

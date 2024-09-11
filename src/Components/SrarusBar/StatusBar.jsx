@@ -4,8 +4,8 @@ import "./StatusBar.css";
 const StatusBar = () => {
   const stages = [
     { id: 1, name: "Team Lead", type: "Form", approved: true },
-    { id: 2, name: "Team Lead", type: "Overview", approved: true },
-    { id: 3, name: "HOD 1", type: "Approval", approved: true },
+    { id: 2, name: "Team Lead", type: "Overview", approved: false },
+    { id: 3, name: "HOD 1", type: "Approval", approved: false },
     { id: 4, name: "HOD 2", type: "Approval", approved: false },
   ];
 

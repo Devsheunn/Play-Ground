@@ -11,11 +11,20 @@ const InconvenienceAllForm = () => {
     selectionComplete,
     selectedEmployeesTemp,
     setSelectionComplete,
+    handleCreate,
+    formData,
+    setFormData,
+    arrayToPost,
   } = useContext(FormContext);
 
   const handleAddEmployees = e => {
     e.preventDefault();
     setSearchBarActive(true);
+  };
+
+  const handlechange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
   };
 
   return (
@@ -30,9 +39,24 @@ const InconvenienceAllForm = () => {
             </div>
             <form action="/">
               <label htmlFor="title">Job Title</label>
-              <input type="text" name="title" id="title" />
+              <input
+                type="text"
+                name="title"
+                id="title"
+                required
+                onChange={e => {
+                  handlechange(e);
+                }}
+              />
               <label htmlFor="description">Job Description</label>
-              <textarea name="description" id="description"></textarea>
+              <textarea
+                name="description"
+                id="description"
+                required
+                onChange={e => {
+                  handlechange(e);
+                }}
+              ></textarea>
 
               <SelectedEmployees />
 
@@ -58,7 +82,13 @@ const InconvenienceAllForm = () => {
                 <br />
 
                 {selectionComplete && selectedEmployeesTemp.length > 0 ? (
-                  <button className="btn" type="submit">
+                  <button
+                    className="btn"
+                    // type="submit"
+                    onClick={e => {
+                      handleCreate(e);
+                    }}
+                  >
                     Create
                   </button>
                 ) : null}

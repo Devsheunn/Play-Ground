@@ -7,7 +7,6 @@ const GetUserDetails = () => {
   const api = useAxiosPrivate();
 
   const getUser = async () => {
-    console.log(accessToken);
     try {
       const response = await api.get("api/users/own/");
       setUser(response.data);

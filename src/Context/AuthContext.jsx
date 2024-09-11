@@ -7,9 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
 
-  console.log("auth context access", accessToken);
-  console.log("auth context refresh", refreshToken);
-
   return (
     <AuthContext.Provider
       value={{
