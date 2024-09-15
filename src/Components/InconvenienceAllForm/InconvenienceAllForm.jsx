@@ -6,15 +6,12 @@ import { FormContext } from "../../Context/FormContext";
 
 const InconvenienceAllForm = () => {
   const {
-    searchBarActive,
     setSearchBarActive,
     selectionComplete,
     selectedEmployeesTemp,
-    setSelectionComplete,
-    handleCreate,
     formData,
     setFormData,
-    arrayToPost,
+    handleCreate,
   } = useContext(FormContext);
 
   const handleAddEmployees = e => {
@@ -42,6 +39,7 @@ const InconvenienceAllForm = () => {
               <input
                 type="text"
                 name="title"
+                value={formData?.title}
                 id="title"
                 required
                 onChange={e => {
@@ -52,6 +50,7 @@ const InconvenienceAllForm = () => {
               <textarea
                 name="description"
                 id="description"
+                value={formData?.description}
                 required
                 onChange={e => {
                   handlechange(e);
@@ -89,7 +88,7 @@ const InconvenienceAllForm = () => {
                       handleCreate(e);
                     }}
                   >
-                    Create
+                    Save
                   </button>
                 ) : null}
               </div>

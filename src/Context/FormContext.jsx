@@ -17,6 +17,7 @@ const FormContextProvider = props => {
   const [canProceed, setCanProceed] = useState(false);
   const api = useAxiosPrivate();
   const [formData, setFormData] = useState({ selected: [] });
+  const [preview, setPreview] = useState(false);
   let arrayToPost = [];
 
   // Functions
@@ -60,6 +61,8 @@ const FormContextProvider = props => {
 
       return true;
     } catch (error) {
+      console.log(error);
+
       console.log(error.response?.status);
       if (error.response?.status === 400) {
         alreadybooked(error);
@@ -114,6 +117,8 @@ const FormContextProvider = props => {
     formData,
     setFormData,
     arrayToPost,
+    preview,
+    setPreview,
   };
 
   return (

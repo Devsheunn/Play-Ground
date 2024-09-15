@@ -15,6 +15,8 @@ import LoginPage from "./Components/LoginPage/LoginPage";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
 import { AuthProvider } from "./Context/AuthContext";
 import Loader from "./Components/Loader/Loader";
+import FormContextProvider from "./Context/FormContext";
+import EditandDraft from "./Components/EditandDraft/EditandDraft";
 
 const router = createBrowserRouter([
   {
@@ -45,12 +47,22 @@ const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
   },
+  {
+    path: `/inconvenience-allowance/:id`,
+    element: (
+      <ProtectedRoutes>
+        <EditandDraft />
+      </ProtectedRoutes>
+    ),
+  },
 ]);
 
 function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <FormContextProvider>
+        <RouterProvider router={router} />
+      </FormContextProvider>
     </AuthProvider>
   );
 }

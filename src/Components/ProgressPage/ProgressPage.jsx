@@ -8,7 +8,7 @@ import Header from "../Header/Header";
 import GetUserDetails from "../GetUserDetails";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const FormPreviewPage = () => {
+const ProgressPage = () => {
   const { formData, user, setPreview, handleCreate } = useContext(FormContext);
   const now = new Date();
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -20,8 +20,6 @@ const FormPreviewPage = () => {
   }, []);
 
   console.log(formData);
-
-  const navigate = useNavigate();
 
   return (
     <>
@@ -78,4 +76,4 @@ const FormPreviewPage = () => {
   );
 };
 
-export default FormPreviewPage;
+export default ProgressPage;

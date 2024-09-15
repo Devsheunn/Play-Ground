@@ -122,6 +122,8 @@ const InconvenienceAll = () => {
     getData("api/inconvenience-request-lines/own/", setData);
     getData("api/inconvenience-requests/", setDeptRec);
     getUser();
+    console.log(deptRec);
+    console.log(data);
   }, []);
 
   let stringifiedData1Array = data.map(obj => {
